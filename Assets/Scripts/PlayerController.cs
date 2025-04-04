@@ -54,4 +54,12 @@ public class PlayerController : MonoBehaviour
         newPos.x = Mathf.Clamp(transform.position.x, -XLimit, XLimit);
         transform.position = newPos;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            GameManager.Instance.Restart(); // Restart the game if the player collides with an enemy
+        }
+    }
 }
