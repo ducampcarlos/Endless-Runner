@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rb; // Reference to the Rigidbody component
 
+    [SerializeField] private float XLimit; // Limit for the player's X position
+
     private enum Direction { None, Left, Right }
 
     private Direction CurrentDirection = Direction.None;
@@ -48,5 +50,8 @@ public class PlayerController : MonoBehaviour
 
         // Move the player based on the current direction
         transform.Translate(transform.right * (CurrentDirection == Direction.Right ? 1 : CurrentDirection == Direction.Left ? -1 : 0) * moveSpeed * Time.deltaTime, Space.World);
+        Vector3 newPos = transform.position;
+        newPos.x = Mathf.Clamp(transform.position.x, -XLimit, XLimit);
+        transform.position = newPos;
     }
 }
