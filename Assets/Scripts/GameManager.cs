@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,9 +8,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [Header("Enemy Spawning")]
     [SerializeField] private GameObject enemyPrefab; // Prefab for the enemy
     [SerializeField] private List<Vector3> enemySpawns; // List of spawn points for the enemies
     [SerializeField] private float spawnInterval = 1f; // Time interval between enemy spawns
+
+    [Header("Score")]
+    int score;
+    [SerializeField] TextMeshProUGUI scoreText; // Reference to the UI text element for displaying the score
 
     private void Awake()
     {
@@ -52,5 +58,11 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Restart the current scene
+    }
+
+    public void ScoreUp()
+    {
+        score++;
+        scoreText.text = score.ToString(); // Update the score text
     }
 }

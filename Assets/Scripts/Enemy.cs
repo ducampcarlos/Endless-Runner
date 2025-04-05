@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
         // Check if the enemy is out of bounds
         if (transform.position.z < -12f)
         {
+            GameManager.Instance.ScoreUp(); // Increment the score in the GameManager
             // Destroy the enemy if it goes out of bounds
             Destroy(gameObject);
         }
