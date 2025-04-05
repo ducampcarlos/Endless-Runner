@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     int score;
     [SerializeField] TextMeshProUGUI scoreText; // Reference to the UI text element for displaying the score
 
+    [Header("Others")]
+    [SerializeField] TextMeshProUGUI pressToStartText;
+
     bool gameStarted = false;
 
     private void Awake()
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         scoreText.gameObject.SetActive(false); // Hide the score text at the start
+        pressToStartText.gameObject.SetActive(true); // Show the "Press to Start" text
     }
 
     private void Update()
@@ -63,6 +67,7 @@ public class GameManager : MonoBehaviour
     {
         gameStarted = true;
         scoreText.gameObject.SetActive(true); // Show the score text when the game starts
+        pressToStartText.gameObject.SetActive(false); // Hide the "Press to Start" text
         StartCoroutine(SpawnEnemies()); // Start spawning enemies
     }
 
