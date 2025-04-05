@@ -16,10 +16,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Score")]
     int score;
+    int highscore;
     [SerializeField] TextMeshProUGUI scoreText; // Reference to the UI text element for displaying the score
+    [SerializeField] TextMeshProUGUI highScoreText; // Reference to the UI text element for displaying the high score
 
     [Header("Others")]
     [SerializeField] GameObject menuPanel;
+    [SerializeField] SaveScore saveScore = new SaveScore(); // Reference to the SaveScore script for saving the score
 
     bool gameStarted = false;
 
@@ -40,6 +43,8 @@ public class GameManager : MonoBehaviour
     {
         scoreText.gameObject.SetActive(false); // Hide the score text at the start
         menuPanel.SetActive(true);
+        highscore = saveScore.LoadScoreFromFile(); // Load the high score from the file
+        highScoreText.text = "Highscore - " + highscore;
     }
 
     private void Update()
@@ -88,6 +93,11 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
+        if(score > saveScore.LoadScoreFromFile()) // Check if the current score is greater than the saved score
+        {
+            saveScore.SaveScoreToFile(score); // Save the new high score
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Restart the current scene
     }
 
@@ -95,5 +105,10 @@ public class GameManager : MonoBehaviour
     {
         score++;
         scoreText.text = score.ToString(); // Update the score text
+        if(score > highscore) // Check if the current score is greater than the high score
+        {
+            highscore = score; // Update the high score
+            highScoreText.text = "Highscore - " + highscore; // Update the high score text
+        }
     }
 }
