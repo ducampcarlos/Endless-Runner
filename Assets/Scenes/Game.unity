@@ -156,6 +156,7 @@ MonoBehaviour:
   - {x: 0.75, y: 0.5, z: 32}
   - {x: -0.75, y: 0.5, z: 32}
   spawnInterval: 1
+  scoreText: {fileID: 1058202232}
 --- !u!4 &121415840
 Transform:
   m_ObjectHideFlags: 0
