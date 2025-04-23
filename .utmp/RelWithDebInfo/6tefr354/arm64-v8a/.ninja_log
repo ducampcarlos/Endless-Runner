@@ -1,10 +1,19 @@
 # ninja log v5
 106	5629	7655717979302585	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ab834bb7e2127271
+8459	8688	7655718011147679	F:/UnityProjects/Endless Runner/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6tefr354/obj/arm64-v8a/libgame.so	6a291c7fdf898fcb
+5843	8458	7655718008650899	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	faedfd2c64f38788
 77	5842	7655717981304685	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	19922c01ae2977b7
+5633	8457	7655718008621615	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	faf11c90eed54de0
 10	6523	7655717986259889	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	efa96ec33d4a4349
 98	6525	7655717984004409	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	a0a170eef1a3e386
 91	7131	7655717994380828	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	68ceef33552c6fe8
 84	7495	7655717997551688	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	ca0ff0ea98077fef
-5633	8457	7655718008621615	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	faf11c90eed54de0
-5843	8458	7655718008650899	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	faedfd2c64f38788
-8459	8688	7655718011147679	F:/UnityProjects/Endless Runner/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6tefr354/obj/arm64-v8a/libgame.so	6a291c7fdf898fcb
+87	2673	7671223456755134	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ab834bb7e2127271
+67	2730	7671223457571649	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	19922c01ae2977b7
+73	2787	7671223457932766	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	faf11c90eed54de0
+5	3286	7671223463340155	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	a0a170eef1a3e386
+14	3329	7671223463608608	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	efa96ec33d4a4349
+20	4097	7671223471017521	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	ca0ff0ea98077fef
+2730	5327	7671223482298355	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	faedfd2c64f38788
+2673	6604	7671223495397480	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	68ceef33552c6fe8
+6605	7837	7671223507468252	F:/UnityProjects/Endless Runner/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6tefr354/obj/arm64-v8a/libgame.so	6a291c7fdf898fcb

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,106 +8,104 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [Header("Enemy Spawning")]
-    [SerializeField] private GameObject enemyPrefab; // Prefab for the enemy
-    [SerializeField] private List<Vector3> enemySpawns; // List of spawn points for the enemies
-    [SerializeField] private float spawnInterval = 1f; // Time interval between enemy spawns
-
     [Header("Score")]
-    int score;
-    int highscore;
-    [SerializeField] TextMeshProUGUI scoreText; // Reference to the UI text element for displaying the score
-    [SerializeField] TextMeshProUGUI highScoreText; // Reference to the UI text element for displaying the high score
+    private int score;
+    private int highscore;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI highScoreText;
 
-    [Header("Others")]
-    [SerializeField] GameObject menuPanel;
-    [SerializeField] SaveScore saveScore = new SaveScore(); // Reference to the SaveScore script for saving the score
+    [Header("UI & References")]
+    [SerializeField] private GameObject menuPanel;
+    [SerializeField] private SaveScore saveScore = new SaveScore();
 
-    bool gameStarted = false;
+    private bool gameStarted = false;
+    private ObstacleSpawner obstacleSpawner;
 
     private void Awake()
     {
-        // Ensure that there is only one instance of GameManager
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject); // Destroy duplicate instances
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     private void Start()
     {
-        scoreText.gameObject.SetActive(false); // Hide the score text at the start
+        scoreText.gameObject.SetActive(false);
         menuPanel.SetActive(true);
-        highscore = saveScore.LoadScoreFromFile(); // Load the high score from the file
+
+        highscore = saveScore.LoadScoreFromFile();
         highScoreText.text = "Highscore - " + highscore;
+
+        AudioManager.Instance.FadeInMusic(1f);
+
+        obstacleSpawner = GetComponent<ObstacleSpawner>();
     }
 
     private void Update()
     {
         if (!gameStarted)
         {
-            //Using the new input system, when any key is pressed, or the screen is touched, call StartGame
-#if UNITY_ANDROID || UNITY_EDITOR
+#if UNITY_ANDROID || UNITY_IOS || UNITY_WEBGL || UNITY_EDITOR
+            // Touch input for mobile and WebGL
             if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
             {
                 StartGame();
             }
 #endif
 
-#if UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
+            // Keyboard input for desktop and WebGL
             if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
             {
                 StartGame();
             }
 #endif
         }
+
     }
 
     public void StartGame()
     {
         gameStarted = true;
-        scoreText.gameObject.SetActive(true); // Show the score text when the game starts
+        scoreText.gameObject.SetActive(true);
         menuPanel.SetActive(false);
-        StartCoroutine(SpawnEnemies()); // Start spawning enemies
-    }
 
-
-    public void Spawn()
-    {
-        Instantiate(enemyPrefab, enemySpawns[Random.Range(0, enemySpawns.Count)], Quaternion.identity);
-    }
-
-    IEnumerator SpawnEnemies()
-    {
-        while (true)
-        {
-            Spawn();
-            yield return new WaitForSeconds(spawnInterval); // Wait for 1 second before spawning the next enemy
-        }
+        obstacleSpawner.StartSpawning();
     }
 
     public void Restart()
     {
-        if(score > saveScore.LoadScoreFromFile()) // Check if the current score is greater than the saved score
-        {
-            saveScore.SaveScoreToFile(score); // Save the new high score
-        }
+        if (score > highscore)
+            saveScore.SaveScoreToFile(score);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Restart the current scene
+        gameStarted = false;
+        AudioManager.Instance.FadeOutMusic(3f);
+        StartCoroutine(RestartAfterDelay());
+    }
+
+    private IEnumerator RestartAfterDelay()
+    {
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(4f);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ScoreUp()
     {
         score++;
-        scoreText.text = score.ToString(); // Update the score text
-        if(score > highscore) // Check if the current score is greater than the high score
+        scoreText.text = score.ToString();
+
+        if (score > highscore)
         {
-            highscore = score; // Update the high score
-            highScoreText.text = "Highscore - " + highscore; // Update the high score text
+            highscore = score;
+            highScoreText.text = "Highscore - " + highscore;
         }
     }
+
+    public bool IsGameRunning()
+    {
+        return gameStarted;
+    }
+
+    public float GetCurrentSpeed() => obstacleSpawner.GetCurrentSpeed();
 }
